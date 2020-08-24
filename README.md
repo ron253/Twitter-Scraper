@@ -4,8 +4,9 @@ Title: Twitter Web Scraper
 
 Author: Ron Huang
 
-About
-This code is used for extracting flu-related tweets from twitter to feed into machine learning model for influenza predictions. 
+About <br />
+
+This code is sed for extracting flu-related tweets from twitter to feed into machine learning model for influenza predictions. 
 
 Installation
 Use any IDE/editor of your choice. The one I am using is pycharm. Click here to download the community version. 
