@@ -6,7 +6,7 @@
 
 **About** <br />
 
-This code is send for extracting flu-related tweets from twitter to feed into machine learning model for influenza predictions. 
+This code is used for extracting flu-related tweets from twitter to feed into machine learning model for influenza predictions. 
 
 **Installation** <br/> 
 Use any IDE/editor of your choice. The one I am using is pycharm. Click here to download the community version. 
