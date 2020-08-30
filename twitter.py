@@ -3,7 +3,8 @@ import GetOldTweets3 as got
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 import time
-words = ["headache","flu", "influenza","contagious", "cough"]
+
+
 
 
 class Tweets:
@@ -25,38 +26,42 @@ class Tweets:
         list_of_tweets = self.getTweets()
         text_tweets = [[tw.id, tw.text, tw.date, tw.permalink] for tw in list_of_tweets]
         df_state = pd.DataFrame(text_tweets,
-                                columns=["Id", "Tweet", "Date", "Links"]).sort_values("Date", ascending=True)
-        df_state['Date'] = df_state['Date'].apply(lambda x: x.strftime('%Y-%m-%d'))
+                                columns=["Id", "Tweet", "Date", "Links"]).sort_values("Date", ascending=True, ignore_index=True)
+        df_state['Date'] = df_state['Date'].apply(lambda x:x.date())
         return df_state
 
 
     def append_Data(self):
-        get_Data_Frame = self.toDataFrame()
-        latest_Date_Range = get_Data_Frame["Date"].iloc[-1]
-        split_Latest_Date_Range = latest_Date_Range.split("-")
-        end_date = str(datetime(year=int(split_Latest_Date_Range[0]), month=int(split_Latest_Date_Range[1]), day=int(split_Latest_Date_Range[2])) + relativedelta(months=+2))
+        dataFrame = self.toDataFrame()
+        get_last_date = dataFrame.iloc[-1]["Date"].strftime('%Y-%m-%d')
+        split_latest_date_range = get_last_date.split("-")
+        end_date = str(datetime(year=int(split_latest_date_range[0]), month=int(split_latest_date_range[1]), day=int(split_latest_date_range[2])) + relativedelta(months=+2))
         split_End_Date = end_date.split(" ")
-        print("Extracting Twitter Tweets From: " + latest_Date_Range + " to " + split_End_Date[0] + " two month-intervals and onwards ")
+        print("Now extracting Twitter Tweets From: " + get_last_date + " to " + split_End_Date[0] + " on a bi-monthly basis and onwards.")
+        list_of_dataframes = [dataFrame]
         while(True):
-            if(not(latest_Date_Range >= "End_Date")):
-                self.startDate = latest_Date_Range
+            if(not(get_last_date >= "End Date")):
+                self.startDate = get_last_date
                 self.endDate = split_End_Date[0]
+                self.maxtweet = "Set max tweet"
                 list_of_tweets = self.getTweets()
                 text_tweets = [[tw.id, tw.text, tw.date, tw.permalink] for tw in list_of_tweets]
                 new_df_state = pd.DataFrame(text_tweets,
-                                             columns=["Id", "Tweet", "Date", "Links"]).sort_values("Date", ascending=True)
-                new_df_state['Date'] = new_df_state['Date'].apply(lambda x: x.strftime('%Y-%m-%d'))
-
-                get_Data_Frame = get_Data_Frame.append(new_df_state, ignore_index = True)
-                writer = pd.ExcelWriter('File Path', engine='openpyxl')
-                get_Data_Frame.to_excel(writer, sheet_name="sheet 1")
-                writer.save()
-                latest_Date_Range = get_Data_Frame["Date"].iloc[-1]
+                                             columns=["Id", "Tweet", "Date", "Links"]).sort_values("Date", ascending=True, ignore_index=True)
+                new_df_state['Date'] = new_df_state['Date'].apply(lambda x: x.date())
+                list_of_dataframes.append(new_df_state)
+                get_last_date = new_df_state.iloc[-1]["Date"].strftime('%Y-%m-%d')
+                split_latest_date_range = get_last_date.split("-")
+                end_date = str(datetime(year=int(split_latest_date_range[0]), month=int(split_latest_date_range[1]),
+                                        day=int(split_latest_date_range[2])) + relativedelta(months=+2))
+                split_End_Date = end_date.split(" ")
                 time.sleep(600)
+
             else:
                 break
-        print("Final Date Extracted is: " + latest_Date_Range)
 
+        output = pd.concat(list_of_dataframes, ignore_index=True)
+        output.to_excel(r'file path', index=False)
 
 
 
