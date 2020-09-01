@@ -27,8 +27,9 @@ Use any IDE/editor of your choice.
 
 **Limitations**<br/>
 1) The module "GetOldTweets" will extract tweets from setSince(inclusive) to setUntil(not inclusive) of the end date. For example, if setSince() is 2019-08-01 and setUntil() is 2019-08-10, tweets will be extracted at the end date of 2019-08-09 instead of 2019-08-10. Therefore, the while loop condition within append_Data() must include the date before the end date for the condition to end, otherwise, the loop will run indefinitely. <br/>
-2) There is a restriction on how many tweets a user is allowed to extract on a per-minute basis. A workaround to this problem is to time out the code for 10 minutes before beginning the next iteration. <br/>
+2) There is a restriction on how many tweets a user is allowed to extract on a per-minute basis. A workaround to this problem is to time out the code for 10 minutes before beginning the next iteration. Use this if you are extracting large amounts of data. <br/>
 3) GetOldTweets extracts tweets on a bi-monthly basis. 
+
 
 
  
