@@ -8,8 +8,7 @@
 
 Developed a twitter scraper to extract flu-related tweets to feed into an LSTM model.
 
-**Installation** <br/> 
-Use any IDE/editor of your choice. 
+
 
 **What Each Function Does** <br/>
 1) Tweets(). Takes in 6 parameters with a specified flu-related keyword, state, radius, maximum tweet to be extracted, start date, and end date to be extracted. <br/>
