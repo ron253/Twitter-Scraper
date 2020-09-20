@@ -33,7 +33,6 @@ class Tweets:
 
     def append_Data(self):
         dataFrame = self.toDataFrame()
-        #time.sleep(600) include this if extracting large amounts of tweets otherwise an API timeout request will occur
         get_last_date = dataFrame.iloc[-1]["Date"].strftime('%Y-%m-%d')
         split_latest_date_range = get_last_date.split("-")
         end_date = str(datetime(year=int(split_latest_date_range[0]), month=int(split_latest_date_range[1]), day=int(split_latest_date_range[2])) + relativedelta(months=+2))
