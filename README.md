@@ -6,7 +6,7 @@
 
 **About** <br />
 
-This code is used for extracting flu-related tweets from twitter.
+Developed a twitter scraper to extract flu-related tweets to feed into an LSTM model.
 
 **Installation** <br/> 
 Use any IDE/editor of your choice. 
